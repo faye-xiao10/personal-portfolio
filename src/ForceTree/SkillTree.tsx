@@ -17,6 +17,10 @@ interface SkillLinkDatum extends d3.SimulationLinkDatum<SkillNodeDatum> {
 }
 
 const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) => {
+  useEffect(() => {
+    console.log("SkillTree effect mount");
+    return () => console.log("SkillTree effect cleanup");
+  }, []);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const simulationRef = useRef<d3.Simulation<SkillNodeDatum, undefined> | null>(null);
 
@@ -111,6 +115,7 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
     // Cleanup on unmount
     return () => {
       simulation.stop();
+      svg.on(".zoom", null); // remove zoom listeners
     };
   }, [data, dimensions, onNodeClick]);
 

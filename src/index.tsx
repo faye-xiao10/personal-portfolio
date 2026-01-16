@@ -3,14 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // 2. Third-party libraries
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // 3. Components/pages (sorted alphabetically or by type)
-import LandingPage from './pages/LandingPage';
+import RootRouterPage from './pages/RootRouterPage';
 
 // import Footer from './components/Footer'
 import AppLayout from './AppLayout';
-import SkillPage from './pages/SkillPage';
+import SkillPage from './pages/SkillNodePage';
 
 import './index.css';
 import { SkillTreeProvider } from './contexts/SkillTreeContext';
@@ -22,14 +22,7 @@ const Root: React.FC = () => (
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route path="/skill/:skillId" element={<SkillPage />} />
-
-            <Route path="/" element={ 
-              <>
-                <LandingPage />
-                {/* <Footer /> */}
-              </>
-            } />
+          <Route path="/*" element={<RootRouterPage />} />
           
           </Route>
 

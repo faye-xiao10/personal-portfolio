@@ -6,7 +6,42 @@ type SkillTreeState = {
     treeData: SkillNode | null;
     loading: boolean;
     error: string | null;
+    getNodeByPath: (relativePath: string) => SkillNode | undefined;
+
 };
+
+// A small slug fallback in case a node is missing `slug`.
+function slugifyFallback(name: string): string {
+    return name
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+}
+
+
+// Walk down the tree following path segments.
+function findNodeByPath(root: SkillNode, relativePath: string): SkillNode | undefined {
+    const clean = relativePath.trim();
+  
+    // "/faye" case → relativePath is ""
+    if (!clean) return root;
+  
+    const segments = clean.split('/').filter(Boolean);
+  
+    let current: SkillNode | undefined = root;
+  
+    for (const seg of segments) {
+        const children: SkillNode[] = current?.children ?? [];
+        current = children.find((c) => (c.slug ?? slugifyFallback(c.name)) === seg);
+  
+      if (!current) return undefined;
+    }
+  
+    return current;
+  }
+  
 
 const SkillTreeContext = createContext<SkillTreeState | null>(null);
 
@@ -43,10 +78,14 @@ export const SkillTreeProvider: React.FC< {children: React.ReactNode }> = ({ chi
         void fetchTree()
       }, [])
 
+    const getNodeByPath = (relativePath: string): SkillNode | undefined => {
+        if (!treeData) return undefined;
+        return findNodeByPath(treeData, relativePath);
+    };
 
 
     return (
-       <SkillTreeContext.Provider value={{ treeData, loading, error }}>
+       <SkillTreeContext.Provider value={{ treeData, loading, error, getNodeByPath }}>
             {children}
         </SkillTreeContext.Provider>
     );
@@ -61,3 +100,5 @@ export function useSkillTree(): SkillTreeState {
 }
 
 export default SkillTreeContext
+
+

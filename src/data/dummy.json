@@ -1,32 +1,36 @@
 {
-    "name": "Faye: Product Innovator",
-    "fixed": false,
-    "pin": { "x": 0.5, "y": 0.5, "relative": true },
-    "size": 45,
-    "children": [
-      {
-        "name": "System Logic (Finance)",
-        "size": 30,
-        "children": [
-          { "name": "JP Morgan: Scale", "size": 20 },
-          { "name": "Federal Reserve: Logic", "size": 20 }
-        ]
-      },
-      {
-        "name": "Product Grit (Founder)",
-        "size": 30,
-        "children": [
-          { "name": "Skilt: EdTech Pivot", "size": 20 },
-          { "name": "Steam Game: Shipping", "size": 20 }
-        ]
-      },
-      {
-        "name": "Creative Breadth (Artist)",
-        "size": 30,
-        "children": [
-          { "name": "Sci-Fi Novelist", "size": 20 },
-          { "name": "Art Teacher: Pedagogy", "size": 20 }
-        ]
-      }
-    ]
-  }
+  "name": "Faye: Product Innovator",
+  "slug": "faye",
+  "fixed": false,
+  "pin": { "x": 0.5, "y": 0.5, "relative": true },
+  "size": 45,
+  "children": [
+    {
+      "name": "System Logic",
+      "slug": "system-logic",
+      "size": 30,
+      "children": [
+        { "name": "JP Morgan: Scale", "slug": "jp-morgan-scale", "size": 20 },
+        { "name": "Federal Reserve: Logic", "slug": "federal-reserve-logic", "size": 20 }
+      ]
+    },
+    {
+      "name": "Product Grit (Founder)",
+      "slug": "product-grit-founder",
+      "size": 30,
+      "children": [
+        { "name": "Skilt: EdTech Pivot", "slug": "skilt-edtech-pivot", "size": 20 },
+        { "name": "Steam Game: Shipping", "slug": "steam-game-shipping", "size": 20 }
+      ]
+    },
+    {
+      "name": "Creative Breadth (Artist)",
+      "slug": "creative-breadth-artist",
+      "size": 30,
+      "children": [
+        { "name": "Sci-Fi Novelist", "slug": "sci-fi-novelist", "size": 20 },
+        { "name": "Art Teacher: Pedagogy", "slug": "art-teacher-pedagogy", "size": 20 }
+      ]
+    }
+  ]
+}
