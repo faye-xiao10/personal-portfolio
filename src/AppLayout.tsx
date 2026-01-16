@@ -2,16 +2,16 @@
 import React from 'react'
 
 import { Outlet } from "react-router-dom";
-// import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar";
 
 const AppLayout: React.FC = () => {
   return (
-    <div className="h-screen flex flex-col md:flex-row ">
+    <div className="h-screen flex flex-col md:flex-row font-nunito">
       {/* Left sidebar (md+) + mobile bottom bar are inside Navbar */}
-      {/* <Navbar /> */}
+      <Navbar />
 
       {/* Vertical divider on md+ */}
-      {/* <div className="hidden md:block w-[2px] bg-gray-200 self-stretch" /> */}
+      <div className="hidden md:block w-[2px] bg-gray-200 self-stretch" />
 
       {/* Routed content. pb-16 so the fixed mobile bar doesn’t cover content */}
       <main className="flex-1 relative pb-16 md:pb-0">

@@ -10,6 +10,7 @@ import LandingPage from './pages/LandingPage';
 
 // import Footer from './components/Footer'
 import AppLayout from './AppLayout';
+import SkillPage from './pages/SkillPage';
 
 import './index.css';
 // import './tailwind.css';
@@ -19,6 +20,7 @@ const Root: React.FC = () => (
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
+          <Route path="/skill/:skillId" element={<SkillPage />} />
 
           <Route path="/" element={ 
             <>

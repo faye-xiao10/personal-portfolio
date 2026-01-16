@@ -37,14 +37,18 @@ const LandingPage: React.FC = () => {
   
     if (loading) return <div className="p-20 text-center">Loading your Identity Nexus...</div>
     return (
-      <div className="w-full h-screen flex flex-col items-center justify-center bg-slate-50">
-        <h1 className="font-extrabold text-2xl mb-6"> 
-          Skill Tree Coming Soon! This is Faye's Awesome Page 
-        </h1>
+      <div className="w-full h-full flex flex-col bg-slate-50">
+		<div className="p-12">
+			<h1 className="font-extrabold text-5xl mb-6"> 
+			Hi,  I'm Faye!
+			</h1>
+
+		</div>
+      
         
         {/* Container to give the SVG space to breathe */}
-        <div className="w-[800px] h-[600px] border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden">
-			{
+		<div className="w-full flex-1 border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden">
+		{
 				treeData ? (
 					<SkillTree 
 						data={treeData} 
