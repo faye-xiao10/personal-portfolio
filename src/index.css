@@ -18,7 +18,7 @@ img {
 }
 
 :root {
-  font-family: 'Nunito Sans', system-ui, Helvetica, Arial, sans-serif, 'opensans';
+  font-family: 'Nunito Sans', 'Open Sans', system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -32,4 +32,13 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+
+.font-opensans {
+  font-family: 'Open Sans', system-ui, Helvetica, Arial, sans-serif;
+}
+
+.font-nunito {
+  font-family: 'Nunito Sans', system-ui, Helvetica, Arial, sans-serif;
 }

@@ -1,4 +1,6 @@
 export interface SkillNode {
+    id?: string;
+    slug?: string;
     name: string;
     size: number;
     fixed?: boolean; 

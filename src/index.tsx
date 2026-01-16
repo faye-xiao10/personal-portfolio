@@ -13,28 +13,31 @@ import AppLayout from './AppLayout';
 import SkillPage from './pages/SkillPage';
 
 import './index.css';
+import { SkillTreeProvider } from './contexts/SkillTreeContext';
 // import './tailwind.css';
 
 const Root: React.FC = () => (
 
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route path="/skill/:skillId" element={<SkillPage />} />
+    <SkillTreeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route path="/skill/:skillId" element={<SkillPage />} />
 
-          <Route path="/" element={ 
-            <>
-              <LandingPage />
-              {/* <Footer /> */}
-            </>
-          } />
-        
-        </Route>
+            <Route path="/" element={ 
+              <>
+                <LandingPage />
+                {/* <Footer /> */}
+              </>
+            } />
+          
+          </Route>
 
-   
+    
 
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </SkillTreeProvider>
 )
 const container = document.getElementById('root')!;
 const root = ReactDOM.createRoot(container);
