@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext", // or "Bundler" if your TS version is 5.0+
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    /* Strictness - Keep these! They prevent "undefined" bugs */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitAny": true,
+
+    /* React/Vite Specifics */
+    "jsx": "react-jsx",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true, // Speeds up build by skipping type-checking node_modules
+    "allowImportingTsExtensions": true, // Useful for Vite
+    "noEmit": true, // Vite handles the build, TS just handles the checking
+
+    /* Professional Output */
+    "sourceMap": true,
+    "declaration": true
+  },
+  "include": ["src"] // Tells TS exactly which files to watch
+}

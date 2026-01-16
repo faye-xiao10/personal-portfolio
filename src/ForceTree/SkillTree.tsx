@@ -1,0 +1,120 @@
+import React, { useEffect, useRef } from 'react';
+import * as d3 from 'd3';
+import drag, { SkillNodeDatum } from './drag'; // Import the type we made in the last step
+import { SkillNode } from '@/types/skill';
+
+// 1. Define the Props Interface
+interface SkillTreeProps {
+  data: SkillNode | null;
+  dimensions: { width: number; height: number };
+  onNodeClick: (event: React.MouseEvent, data: SkillNode) => void;
+}
+
+// 2. Define the Link Type for D3
+interface SkillLinkDatum extends d3.SimulationLinkDatum<SkillNodeDatum> {
+  source: SkillNodeDatum;
+  target: SkillNodeDatum;
+}
+
+const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) => {
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const simulationRef = useRef<d3.Simulation<SkillNodeDatum, undefined> | null>(null);
+
+  useEffect(() => {
+    if (!data || !svgRef.current || !dimensions.width) return;
+
+    const { width, height } = dimensions;
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove(); 
+
+    // 3. Hierarchy & Data Transformation
+    // We cast the hierarchy to our SkillNodeDatum to ensure D3 properties are tracked
+    const root = d3.hierarchy(data) as unknown as d3.HierarchyNode<SkillNodeDatum>;
+    const links = root.links() as unknown as SkillLinkDatum[];
+    const nodes = root.descendants() as unknown as SkillNodeDatum[];
+
+    // 4. Pinning Logic (The "Founder" System Logic)
+    nodes.forEach(n => {
+      const pin = n.data.pin;
+      if (n.data.fixed && pin) {
+        n.fx = pin.relative ? pin.x * width : pin.x;
+        n.fy = pin.relative ? pin.y * height : pin.y;
+      }
+    });
+
+    // 5. Physics Simulation
+    const simulation = d3.forceSimulation<SkillNodeDatum>(nodes)
+      .force("link", d3.forceLink<SkillNodeDatum, SkillLinkDatum>(links)
+        .id((d) => (d as any).id) // D3 internal ID handling
+        .distance(100))
+      .force("charge", d3.forceManyBody().strength(-400))
+      .force("center", d3.forceCenter(width / 2, height / 2));
+
+    simulationRef.current = simulation;
+
+    const g = svg.append("g"); 
+
+    // 6. Visualization Layers
+    const link = g.append("g")
+      .selectAll<SVGLineElement, SkillLinkDatum>("line")
+      .data(links)
+      .join("line")
+      .attr("stroke", "#cbd5e1")
+      .attr("stroke-opacity", 0.6);
+
+    const node = g.append("g")
+      .selectAll<SVGCircleElement, SkillNodeDatum>("circle")
+      .data(nodes)
+      .join("circle")
+      .attr("r", d => (d.data.size || 20) - d.depth * 2)
+      .attr("fill", d => d.depth === 0 ? "#16D4FF" : "#3b82f6")
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 2)
+      .style("cursor", "pointer")
+      .call(drag(simulation, () => ({ width, height })) as any)      
+      .on("click", (e, d) => onNodeClick(e, d.data)); // Pass the raw SkillNode back
+
+    const label = g.append("g")
+      .selectAll<SVGTextElement, SkillNodeDatum>("text")
+      .data(nodes)
+      .join("text")
+      .attr("text-anchor", "middle")
+      .attr("dy", d => (d.data.size || 20) + 10)
+      .text(d => d.data.name)
+      .attr("class", "text-xs font-bold fill-gray-700 pointer-events-none") // pointer-events-none is best practice for labels
+      .style("paint-order", "stroke")
+      .style("stroke", "#fff")
+      .style("stroke-width", "3px");
+
+    // 7. Tick Handler (The Animation loop)
+    simulation.on("tick", () => {
+      link
+        .attr("x1", d => d.source.x ?? 0)
+        .attr("y1", d => d.source.y ?? 0)
+        .attr("x2", d => d.target.x ?? 0)
+        .attr("y2", d => d.target.y ?? 0);
+
+      node
+        .attr("cx", d => d.x ?? 0)
+        .attr("cy", d => d.y ?? 0);
+
+      label
+        .attr("x", d => d.x ?? 0)
+        .attr("y", d => d.y ?? 0);
+    });
+
+    // Zoom behavior
+    svg.call(d3.zoom<SVGSVGElement, unknown>().on("zoom", (e) => {
+      g.attr("transform", e.transform);
+    }));
+
+    // Cleanup on unmount
+    return () => {
+      simulation.stop();
+    };
+  }, [data, dimensions, onNodeClick]);
+
+  return <svg ref={svgRef} className="w-full h-full bg-slate-50" />;
+};
+
+export default SkillTree;

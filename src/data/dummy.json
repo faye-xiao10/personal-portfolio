@@ -1,0 +1,32 @@
+{
+    "name": "Faye: Product Innovator",
+    "fixed": false,
+    "pin": { "x": 0.5, "y": 0.5, "relative": true },
+    "size": 45,
+    "children": [
+      {
+        "name": "System Logic (Finance)",
+        "size": 30,
+        "children": [
+          { "name": "JP Morgan: Scale", "size": 20 },
+          { "name": "Federal Reserve: Logic", "size": 20 }
+        ]
+      },
+      {
+        "name": "Product Grit (Founder)",
+        "size": 30,
+        "children": [
+          { "name": "Skilt: EdTech Pivot", "size": 20 },
+          { "name": "Steam Game: Shipping", "size": 20 }
+        ]
+      },
+      {
+        "name": "Creative Breadth (Artist)",
+        "size": 30,
+        "children": [
+          { "name": "Sci-Fi Novelist", "size": 20 },
+          { "name": "Art Teacher: Pedagogy", "size": 20 }
+        ]
+      }
+    ]
+  }
