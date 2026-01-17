@@ -17,6 +17,7 @@ const SkillNodePage: React.FC<SkillPageProps> = ({ node, path }) => {
 	return (
 		<div className="flex h-screen">
 			<h2> {node.name}</h2>
+			hi
 			
 		
 		</div>

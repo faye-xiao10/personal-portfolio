@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSkillTree } from "@/contexts/SkillTreeContext";
 import type { SkillNode } from "@/types/skill";
+import PreviewTree from '@/ForceTree/PreviewTree';
 
 function normalizePath(path: string): string {
   return path.replace(/^\/+|\/+$/g, "");
@@ -104,42 +105,51 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="w-[30%] h-screen p-6 gap-2 flex flex-col">
-      <h2
-        className="font-extrabold text-3xl rounded-2xl mb-4 hover:cursor-pointer hover:text-gray-600 hover:bg-gray-50"
-        onClick={() => navigate("/")}
-      >
-        Faye Xiao
-      </h2>
+        <h2
+            className="font-extrabold text-3xl rounded-2xl mb-4 hover:cursor-pointer hover:text-gray-600 hover:bg-gray-50"
+            onClick={() => navigate("/")}
+        >
+            Faye Xiao
+        </h2>
 
-      <div className="w-full h-px bg-gray-300 my-2" />
+        <div className="w-full h-px bg-gray-300 my-2" />
 
-      <h3 className="font-bold text-2xl">About Me</h3>
-      <p className="text-base opacity-90">
-        Hi I'm Faye, product innovator and creative. Welcome to my skill tree! Every word here is written by me, not AI.
-      </p>
+        <h3 className="font-bold text-2xl">About Me</h3>
+        <p className="text-base opacity-90">
+            Hi I'm Faye, product innovator and creative. Welcome to my skill tree! Every word here is written by me, not AI.
+        </p>
 
-      <div className="w-full h-px bg-gray-300 my-2" />
+        <div className="w-full h-px bg-gray-300 my-2" />
 
-      <h3 className="font-bold text-xl">Explore</h3>
-
-      {loading && <div className="text-sm opacity-70">Loading…</div>}
-      {error && <div className="text-sm text-red-600">{error}</div>}
-
-      {!loading && !error && (
-        <div className="flex flex-col gap-1">
-          {topLevel.map(node => (
-            <NavItem
-              key={node.id ?? node.slug ?? node.name}
-              node={node}
-              depth={0}
-              activeSlug={activeSlug}
-              onNavigate={handleNavigate}
+        <h3 className="font-bold text-xl">Explore</h3>
+        <div className="w-[120px] h-[120px] hover:cursor-pointer hover:opacity-70 hover:outline-3 hover:outline-gray-200" 
+                onClick={() => navigate("/")}
+            >
+            <PreviewTree 
+                data={treeData} 
+                dimensions={{ width: 120, height: 120 }}           
             />
-          ))}
         </div>
-      )}
+        
 
-      <div className="flex-1" />
+        {loading && <div className="text-sm opacity-70">Loading…</div>}
+        {error && <div className="text-sm text-red-600">{error}</div>}
+
+        {!loading && !error && (
+            <div className="flex flex-col gap-1">
+            {topLevel.map(node => (
+                <NavItem
+                key={node.id ?? node.slug ?? node.name}
+                node={node}
+                depth={0}
+                activeSlug={activeSlug}
+                onNavigate={handleNavigate}
+                />
+            ))}
+            </div>
+        )}
+
+        <div className="flex-1" />
     </div>
   );
 };
