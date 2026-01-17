@@ -19,6 +19,7 @@ interface SkillLinkDatum extends d3.SimulationLinkDatum<SkillNodeDatum> {
 const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) => {
   useEffect(() => {
     console.log("SkillTree effect mount");
+    
     return () => console.log("SkillTree effect cleanup");
   }, []);
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -37,6 +38,19 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
     const links = root.links() as unknown as SkillLinkDatum[];
     const nodes = root.descendants() as unknown as SkillNodeDatum[];
 
+    console.log(
+      "D3 nodes after hierarchy:",
+      nodes.map(n => ({
+        name: n.data.name,
+        slug: n.data.slug,
+        depth: n.depth,
+        fixed: n.data.fixed,
+        pin: n.data.pin,
+        x: n.x,
+        y: n.y,
+      }))
+    );
+
     // 4. Pinning Logic (The "Founder" System Logic)
     nodes.forEach(n => {
       const pin = n.data.pin;
@@ -51,7 +65,7 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
       .force("link", d3.forceLink<SkillNodeDatum, SkillLinkDatum>(links)
         .id((d) => (d as any).id) // D3 internal ID handling
         .distance(100))
-      .force("charge", d3.forceManyBody().strength(-400))
+      .force("charge", d3.forceManyBody().strength(-300))
       .force("center", d3.forceCenter(width / 2, height / 2));
 
     simulationRef.current = simulation;

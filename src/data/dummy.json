@@ -1,6 +1,6 @@
 {
   "name": "Faye: Product Innovator",
-  "slug": "faye",
+  "slug": "",
   "fixed": false,
   "pin": { "x": 0.5, "y": 0.5, "relative": true },
   "size": 45,
@@ -10,8 +10,16 @@
       "slug": "system-logic",
       "size": 30,
       "children": [
-        { "name": "JP Morgan: Scale", "slug": "jp-morgan-scale", "size": 20 },
-        { "name": "Federal Reserve: Logic", "slug": "federal-reserve-logic", "size": 20 }
+        {
+          "name": "JP Morgan: Scale",
+          "slug": "system-logic/jp-morgan-scale",
+          "size": 20
+        },
+        {
+          "name": "Federal Reserve: Logic",
+          "slug": "system-logic/federal-reserve-logic",
+          "size": 20
+        }
       ]
     },
     {
@@ -19,8 +27,16 @@
       "slug": "product-grit-founder",
       "size": 30,
       "children": [
-        { "name": "Skilt: EdTech Pivot", "slug": "skilt-edtech-pivot", "size": 20 },
-        { "name": "Steam Game: Shipping", "slug": "steam-game-shipping", "size": 20 }
+        {
+          "name": "Skilt: EdTech Pivot",
+          "slug": "product-grit-founder/skilt-edtech-pivot",
+          "size": 20
+        },
+        {
+          "name": "Steam Game: Shipping",
+          "slug": "product-grit-founder/steam-game-shipping",
+          "size": 20
+        }
       ]
     },
     {
@@ -28,8 +44,16 @@
       "slug": "creative-breadth-artist",
       "size": 30,
       "children": [
-        { "name": "Sci-Fi Novelist", "slug": "sci-fi-novelist", "size": 20 },
-        { "name": "Art Teacher: Pedagogy", "slug": "art-teacher-pedagogy", "size": 20 }
+        {
+          "name": "Sci-Fi Novelist",
+          "slug": "creative-breadth-artist/sci-fi-novelist",
+          "size": 20
+        },
+        {
+          "name": "Art Teacher: Pedagogy",
+          "slug": "creative-breadth-artist/art-teacher-pedagogy",
+          "size": 20
+        }
       ]
     }
   ]

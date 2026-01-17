@@ -1,9 +1,13 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
+
 
 const Navbar: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="w-[30%] h-screen p-6 gap-2 flex flex-col">
-                <h2 className="font-extrabold text-3xl mb-4"> Faye Xiao </h2>
+                <h2 className="font-extrabold text-3xl rounded-2xl mb-4 hover:cursor-pointer hover:text-gray-600 hover:bg-gray-50"  onClick={() => navigate("/")}> Faye Xiao </h2>
                 <div className="w-full h-px bg-gray-300 my-2"></div>
 
                 <h3 className="font-bold text-2xl "> About Me </h3>
