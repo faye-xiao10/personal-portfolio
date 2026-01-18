@@ -40,3 +40,41 @@ img {
 .font-nunito {
   font-family: 'Nunito Sans', system-ui, Helvetica, Arial, sans-serif;
 }
+
+
+
+.card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  isolation: isolate; /* IMPORTANT: forces pseudo-element stacking to behave */
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+
+  background: linear-gradient(
+    135deg,
+    transparent 35%,
+    rgba(182, 200, 212, 0.25) 50%,
+    transparent 65%
+  );
+  background-size: 300% 300%;
+  background-position: 0% 0%;
+
+  opacity: 0;
+  animation: sweep-pos 2s ease-in-out infinite;
+}
+
+@keyframes sweep-pos {
+  0%   { opacity: 0;   background-position: 0% 0%; }
+  15%  { opacity: 0.30; }
+  40%  { opacity: 0.30; }
+  100% { opacity: 0;   background-position: 100% 100%; }
+}

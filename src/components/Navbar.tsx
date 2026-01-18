@@ -105,31 +105,69 @@ const Navbar: React.FC = () => {
 
   return (
     <div className="w-[30%] h-screen p-6 gap-2 flex flex-col">
-        <h2
-            className="font-extrabold text-3xl rounded-2xl mb-4 hover:cursor-pointer hover:text-gray-600 hover:bg-gray-50"
-            onClick={() => navigate("/")}
-        >
-            Faye Xiao
-        </h2>
+        <div className="flex justify-between">
 
-        <div className="w-full h-px bg-gray-300 my-2" />
+            <div>
+                <h2
+                    className="font-extrabold text-3xl rounded-2xl mb-4 hover:cursor-pointer hover:text-gray-600 hover:bg-gray-50"
+                    onClick={() => navigate("/")}
+                >
+                    Faye Xiao
+                </h2>
+                <h3> CS + Business From Umich</h3>
+                <h3> Check out my Skill Tree -</h3>
 
-        <h3 className="font-bold text-2xl">About Me</h3>
-        <p className="text-base opacity-90">
-            Hi I'm Faye, product innovator and creative. Welcome to my skill tree! Every word here is written by me, not AI.
-        </p>
+            </div>
+            
+            <div className=" flex-shrink-0 hover:cursor-pointer hover:opacity-70 hover:outline-3 hover:outline-gray-200 rounded-xl" 
+                            onClick={() => navigate("/")}
+                >
+                <div className=" card w-[120px] h-[120px] ">
+                    <PreviewTree 
+                    data={treeData} 
+                    dimensions={{ width: 120, height: 120 }}           
+                />
 
-        <div className="w-full h-px bg-gray-300 my-2" />
+                </div>
+            
+            </div>
 
-        <h3 className="font-bold text-xl">Explore</h3>
-        <div className="w-[120px] h-[120px] hover:cursor-pointer hover:opacity-70 hover:outline-3 hover:outline-gray-200" 
-                onClick={() => navigate("/")}
-            >
-            <PreviewTree 
-                data={treeData} 
-                dimensions={{ width: 120, height: 120 }}           
-            />
         </div>
+
+
+
+        <div className="w-full h-px bg-gray-300 my-2" />
+
+        <div className="flex gap-2">
+        
+            
+
+            <div>
+                <h3 className="font-bold text-2xl">About Me</h3>
+                
+                
+                <p className="text-base opacity-90">
+                    Hi I'm Faye, product innovator and creative. Welcome to my skill tree! Every word here is written by me, not AI.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div className="w-full h-px bg-gray-300 my-2" />
+
+        <div className="flex">
+            
+            <div>
+            <h3 className="font-bold text-xl">Explore</h3>
+            <h2> Click a node on the skill tree to get started!</h2>
+
+
+            </div>
+           
+        </div>
+       
         
 
         {loading && <div className="text-sm opacity-70">Loading…</div>}
