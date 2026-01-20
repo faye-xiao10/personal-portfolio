@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import drag, { SkillNodeDatum } from './drag'; // Import the type we made in the last step
 import { SkillNode } from '@/types/skill';
-import { attachNeighborhoodSpotlight } from "./interactions";
+import { attatchInteractions } from "./interactions";
 
 
 // 1. Define the Props Interface
@@ -115,7 +115,7 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
       .style("stroke-width", "3px");
 
     // attach interactions
-    attachNeighborhoodSpotlight({
+    attatchInteractions({
       node,
       label,
       link: link as any,

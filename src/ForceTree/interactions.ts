@@ -6,7 +6,7 @@ export type HoverLinkDatum = {
   target: SkillNodeDatum;
 };
 
-export function attachNeighborhoodSpotlight(opts: {
+export function attatchInteractions(opts: {
   node: d3.Selection<SVGCircleElement, SkillNodeDatum, SVGGElement, unknown>;
   label: d3.Selection<SVGTextElement, SkillNodeDatum, SVGGElement, unknown>;
   link: d3.Selection<SVGLineElement, HoverLinkDatum, SVGGElement, unknown>;
@@ -84,37 +84,43 @@ export function attachNeighborhoodSpotlight(opts: {
   /* ---------------- halo pulse ---------------- */
 
   function startHaloPulse(
-    hovered: d3.Selection<SVGCircleElement, SkillNodeDatum, any, any>
+	hovered: d3.Selection<SVGCircleElement, SkillNodeDatum, any, any>
   ) {
-    const r0 = getRadius(hovered.datum());
-
-    hovered
-      .interrupt()
-      .attr("filter", `url(#${glowId})`)
-      .attr("r", r0)
-      .transition()
-      .duration(700)
-      .ease(d3.easeCubicInOut)
-      .attr("r", r0 * 1.3)
-      .transition()
-      .duration(700)
-      .ease(d3.easeCubicInOut)
-      .attr("r", r0)
-      .on("end", () => startHaloPulse(hovered));
+	const el = hovered.node();
+	if (!el || el.getAttribute("data-hovered") !== "true") return;
+  
+	const r0 = getRadius(hovered.datum());
+  
+	hovered
+	  .attr("filter", `url(#${glowId})`)
+	  .attr("r", r0)
+	  .transition()
+	  .duration(700)
+	  .ease(d3.easeCubicInOut)
+	  .attr("r", r0 * 1.3)
+	  .transition()
+	  .duration(700)
+	  .ease(d3.easeCubicInOut)
+	  .attr("r", r0)
+	  .on("end", () => {
+		if (el.getAttribute("data-hovered") === "true") {
+		  startHaloPulse(hovered);
+		}
+	  });
   }
-
+  
   function stopHaloPulse(
-    hovered: d3.Selection<SVGCircleElement, SkillNodeDatum, any, any>
+	hovered: d3.Selection<SVGCircleElement, SkillNodeDatum, any, any>
   ) {
-    const r0 = getRadius(hovered.datum());
-
-    hovered
-      .interrupt()
-      .transition()
-      .duration(200)
-      .ease(d3.easeCubicOut)
-      .attr("r", r0)
-      .on("end", () => hovered.attr("filter", null));
+	const r0 = getRadius(hovered.datum());
+  
+	hovered
+	  .interrupt()
+	  .transition()
+	  .duration(200)
+	  .ease(d3.easeCubicOut)
+	  .attr("r", r0)
+	  .on("end", () => hovered.attr("filter", null));
   }
 
   /* ---------------- declarative spotlight ---------------- */
@@ -168,11 +174,13 @@ export function attachNeighborhoodSpotlight(opts: {
 
   node
     .on("mouseenter.hover", function (_event, d) {
-      applySpotlight(d);
-      startHaloPulse(d3.select(this));
+		this.setAttribute("data-hovered", "true");
+		applySpotlight(d);
+		startHaloPulse(d3.select(this));
     })
     .on("mouseleave.hover", function () {
-      applySpotlight(null);
-      stopHaloPulse(d3.select(this));
+		this.removeAttribute("data-hovered");
+		applySpotlight(null);
+		stopHaloPulse(d3.select(this));
     });
 }
