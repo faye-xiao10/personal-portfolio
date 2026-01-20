@@ -122,7 +122,7 @@ const Navbar: React.FC = () => {
             <div className=" flex-shrink-0 hover:cursor-pointer hover:opacity-70 hover:outline-3 hover:outline-gray-200 rounded-xl" 
                             onClick={() => navigate("/")}
                 >
-                <div className=" card w-[120px] h-[120px] ">
+                <div className=" shimmer-overlay w-[120px] h-[120px] ">
                     <PreviewTree 
                     data={treeData} 
                     dimensions={{ width: 120, height: 120 }}           

@@ -54,6 +54,8 @@ const PreviewTree: React.FC<SkillTreeProps> = ({ data, dimensions }) => {
       .attr("stroke", "#cbd5e1")
       .attr("stroke-opacity", 0.7);
 
+      
+
     const node = g
       .append("g")
       .selectAll<SVGCircleElement, NodeDatum>("circle")
@@ -61,6 +63,8 @@ const PreviewTree: React.FC<SkillTreeProps> = ({ data, dimensions }) => {
       .join("circle")
       .attr("r", (d) => Math.max(2, 6 - d.depth * 1.8))
       .attr("fill", "#3b82f6");
+
+    
 
     simulation.on("tick", () => {
       link

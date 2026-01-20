@@ -43,7 +43,7 @@ img {
 
 
 
-.card {
+.shimmer-overlay {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
@@ -51,7 +51,7 @@ img {
   isolation: isolate; /* IMPORTANT: forces pseudo-element stacking to behave */
 }
 
-.card::before {
+.shimmer-overlay::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -62,7 +62,7 @@ img {
   background: linear-gradient(
     135deg,
     transparent 35%,
-    rgba(182, 200, 212, 0.25) 50%,
+    rgba(156, 181, 199, 0.25) 50%,
     transparent 65%
   );
   background-size: 300% 300%;
