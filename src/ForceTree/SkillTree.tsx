@@ -9,7 +9,9 @@ import { attatchInteractions } from "./interactions";
 interface SkillTreeProps {
   data: SkillNode | null;
   dimensions: { width: number; height: number };
-  onNodeClick: (event: React.MouseEvent, data: SkillNode) => void;
+  onNodeClick?: (event: React.MouseEvent, data: SkillNode) => void;
+  onNodeHover?: (event: React.MouseEvent, data: SkillNode) => void;
+  onNodeHoverEnd?: () => void;
 }
 
 // 2. Define the Link Type for D3
@@ -18,8 +20,14 @@ interface SkillLinkDatum extends d3.SimulationLinkDatum<SkillNodeDatum> {
   target: SkillNodeDatum;
 }
 
-const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) => {
-  useEffect(() => {
+const SkillTree: React.FC<SkillTreeProps> = ({
+    data,
+    dimensions,
+    onNodeClick,
+    onNodeHover,
+    onNodeHoverEnd,
+  }) => {
+    useEffect(() => {
     console.log("SkillTree effect mount");
     
     return () => console.log("SkillTree effect cleanup");
@@ -100,8 +108,15 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
       .attr("stroke-width", 2)
       .style("cursor", "pointer")
       .call(drag(simulation, () => ({ width, height })) as any)      
-      .on("click", (e, d) => onNodeClick(e, d.data)); // Pass the raw SkillNode back
-
+      .on("mouseenter", (e, d) => {
+        onNodeHover?.(e as unknown as React.MouseEvent, d.data);
+      })
+      .on("mouseleave", () => {
+        onNodeHoverEnd?.();
+      })
+      .on("click", (e, d) => {
+        onNodeClick?.(e as unknown as React.MouseEvent, d.data);
+      });
       const radius = (d: SkillNodeDatum) => (d.data.size || 20) - d.depth * 2;
 
       // Bigger near root, smaller as depth increases (clamped so it doesn’t get silly)

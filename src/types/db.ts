@@ -11,4 +11,5 @@ export type SkillNodeRow = {
   pin: Pin | null;
   content: Record<string, unknown> | null;
   updated_at: string;
+  description: string | null;
 };

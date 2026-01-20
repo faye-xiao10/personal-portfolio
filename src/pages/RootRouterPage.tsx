@@ -1,6 +1,7 @@
 	import React from 'react'
 	import { useLocation, useNavigate, useParams } from "react-router-dom"
-	import SkillTree from '@/ForceTree/SkillTree'
+	// import SkillTree from '@/ForceTree/SkillTree'
+	import SkillTreeWithPopup from "@/ForceTree/SkillTreeWithPopup";
 	import { useSkillTree } from '@/contexts/SkillTreeContext';
 	import type { SkillNode } from "@/types/skill";
 	import SkillNodePage from "@/pages/SkillNodePage";
@@ -40,13 +41,13 @@
 					<div className="w-full flex-1 border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden">
 					
 			
-						<SkillTree 
-							data={treeData} 
-							dimensions={{ width: 1200, height: 600 }} 
-							onNodeClick={(e, d) => {
-								console.log("Explored:", d.slug)
-								navigate(`/${d.slug}`);
-							}}
+					<SkillTreeWithPopup
+						data={treeData}
+						dimensions={{ width: 1200, height: 600 }}
+						onNodeClick={(_e, node) => {
+							if (!node.slug) return;
+							navigate(`/${node.slug}`);
+						}}
 						/>
 						</div>
 					</div>

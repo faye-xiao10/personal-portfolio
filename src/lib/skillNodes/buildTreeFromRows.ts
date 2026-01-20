@@ -12,6 +12,7 @@ function rowToNode(row: SkillNodeRow): SkillNodeWithChildren {
     fixed: row.fixed ?? false,
     ...(row.logo ? { logo: row.logo } : {}),
     ...(row.pin ? { pin: row.pin } : {}),
+    ...(row.description ? { description: row.description } : {}),
     children: [],
   };
 }

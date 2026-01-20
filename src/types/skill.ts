@@ -7,4 +7,5 @@ export interface SkillNode {
   pin?: { x: number; y: number; relative: boolean };
   children?: SkillNode[];
   logo?: string;
+  description?: string | null;
 }

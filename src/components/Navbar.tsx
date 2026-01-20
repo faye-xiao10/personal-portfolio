@@ -1,36 +1,36 @@
-	import React, { useMemo, useState } from "react";
-	import { useLocation, useNavigate } from "react-router-dom";
-	import { useSkillTree } from "@/contexts/SkillTreeContext";
-	import type { SkillNode } from "@/types/skill";
-	import PreviewTree from '@/ForceTree/PreviewTree';
-	import wolvsoftLogo from '@/assets/wolvsoftLogo.jpeg'
+import React, { useMemo, useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSkillTree } from "@/contexts/SkillTreeContext";
+import type { SkillNode } from "@/types/skill";
+import PreviewTree from '@/ForceTree/PreviewTree';
 
-	function normalizePath(path: string): string {
-	return path.replace(/^\/+|\/+$/g, "");
-	}
 
-	// Your app routes look like "/creative-builder/art-portfolio"
-	function getActiveSlugFromLocation(pathname: string): string {
-	return normalizePath(pathname);
-	}
+function normalizePath(path: string): string {
+return path.replace(/^\/+|\/+$/g, "");
+}
 
-	function hasChildren(n: SkillNode): boolean {
-	return Array.isArray(n.children) && n.children.length > 0;
-	}
+// Your app routes look like "/creative-builder/art-portfolio"
+function getActiveSlugFromLocation(pathname: string): string {
+return normalizePath(pathname);
+}
 
-	function isSlugActive(nodeSlug: string, activeSlug: string): boolean {
-		if (!nodeSlug) return activeSlug === ""; // root
-		return activeSlug === nodeSlug || activeSlug.startsWith(nodeSlug + "/");
-	}
+function hasChildren(n: SkillNode): boolean {
+return Array.isArray(n.children) && n.children.length > 0;
+}
 
-	type NavItemProps = {
+function isSlugActive(nodeSlug: string, activeSlug: string): boolean {
+	if (!nodeSlug) return activeSlug === ""; // root
+	return activeSlug === nodeSlug || activeSlug.startsWith(nodeSlug + "/");
+}
+
+type NavItemProps = {
 	node: SkillNode;
 	depth: number;
 	activeSlug: string;
 	onNavigate: (slug: string) => void;
-	};
+};
 
-	const NavItem: React.FC<NavItemProps> = ({ node, depth, activeSlug, onNavigate }) => {
+const NavItem: React.FC<NavItemProps> = ({ node, depth, activeSlug, onNavigate }) => {
 	const [open, setOpen] = useState(true);
 
 	const slug = node.slug ?? "";
@@ -40,6 +40,8 @@
 	const logo = node.logo ?? null;
 	const showLogo = !!logo;
 	const isBranch = hasChildren(node);
+	const shouldBeOpen = isExactActive || isInSubtree;
+
 	const handleRowClick = () => {
 	if (isBranch) {
 		setOpen(o => !o);
@@ -48,10 +50,15 @@
 	if (node.slug) onNavigate(node.slug);
 	};
 
-
-
 	const indentClass =
 		depth === 0 ? "" : depth === 1 ? "pl-4" : depth === 2 ? "pl-8" : "pl-12";
+
+		useEffect(() => {
+			if (!hasChildren(node)) return;
+			if (isExactActive || isInSubtree) {
+				setOpen(true);
+			}
+			}, [isExactActive, isInSubtree, node]);
 
 	return (
 		<div className={indentClass}>
@@ -112,8 +119,10 @@
 			</div>
 		)}
 		</div>
-	);
+		);
 	};
+
+	
 
 	const Navbar: React.FC = () => {
 	const navigate = useNavigate();
