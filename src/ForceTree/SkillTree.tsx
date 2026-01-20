@@ -102,17 +102,25 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
       .call(drag(simulation, () => ({ width, height })) as any)      
       .on("click", (e, d) => onNodeClick(e, d.data)); // Pass the raw SkillNode back
 
-    const label = g.append("g")
-      .selectAll<SVGTextElement, SkillNodeDatum>("text")
-      .data(nodes)
-      .join("text")
-      .attr("text-anchor", "middle")
-      .attr("dy", d => (d.data.size || 20) + 10)
-      .text(d => d.data.name)
-      .attr("class", "text-xs font-bold fill-gray-700 pointer-events-none") // pointer-events-none is best practice for labels
-      .style("paint-order", "stroke")
-      .style("stroke", "#fff")
-      .style("stroke-width", "3px");
+      const radius = (d: SkillNodeDatum) => (d.data.size || 20) - d.depth * 2;
+
+      // Bigger near root, smaller as depth increases (clamped so it doesn’t get silly)
+      const fontSizePx = (d: SkillNodeDatum) =>Math.max(10, 26 * Math.pow(0.7, d.depth));
+      const labelDy = (d: SkillNodeDatum) => radius(d) + 10 + Math.max(0, 10 - d.depth * 2); 
+      
+      const label = g.append("g")
+        .selectAll<SVGTextElement, SkillNodeDatum>("text")
+        .data(nodes)
+        .join("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", d => labelDy(d))
+        .attr("font-size", d => `${fontSizePx(d)}px`)
+        .text(d => d.data.name)
+        .attr("class", "font-bold fill-gray-700 pointer-events-none")
+        .style("paint-order", "stroke")
+        .style("stroke", "#fff")
+        .style("stroke-width", "3px");
+      
 
     // attach interactions
     attatchInteractions({

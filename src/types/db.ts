@@ -7,6 +7,7 @@ export type SkillNodeRow = {
   name: string;
   size: number;
   fixed: boolean;
+  logo: string | null;
   pin: Pin | null;
   content: Record<string, unknown> | null;
   updated_at: string;

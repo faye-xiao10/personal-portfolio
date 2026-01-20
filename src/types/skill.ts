@@ -6,4 +6,5 @@ export interface SkillNode {
   fixed?: boolean;
   pin?: { x: number; y: number; relative: boolean };
   children?: SkillNode[];
+  logo?: string;
 }
