@@ -118,61 +118,37 @@ const Navbar: React.FC = () => {
                 <h3> Check out my Skill Tree -</h3>
 
             </div>
-            
-            <div className=" flex-shrink-0 hover:cursor-pointer hover:opacity-70 hover:outline-3 hover:outline-gray-200 rounded-xl" 
-                            onClick={() => navigate("/")}
+            <div className="flex-shrink-0 cursor-pointer rounded-xl
+                            transition duration-150 ease-out
+                            hover:ring-3 hover:ring-gray-200"
+                onClick={() => navigate("/")}
                 >
                 <div className=" shimmer-overlay w-[120px] h-[120px] ">
                     <PreviewTree 
                     data={treeData} 
                     dimensions={{ width: 120, height: 120 }}           
                 />
-
                 </div>
-            
             </div>
-
         </div>
-
-
-
         <div className="w-full h-px bg-gray-300 my-2" />
-
         <div className="flex gap-2">
-        
-            
-
             <div>
-                <h3 className="font-bold text-2xl">About Me</h3>
-                
-                
+                <h3 className="font-bold text-2xl">About Me</h3>           
                 <p className="text-base opacity-90">
                     Hi I'm Faye, product innovator and creative. Welcome to my skill tree! Every word here is written by me, not AI.
                 </p>
-
             </div>
-
         </div>
-
-
         <div className="w-full h-px bg-gray-300 my-2" />
-
-        <div className="flex">
-            
+        <div className="flex">     
             <div>
             <h3 className="font-bold text-xl">Explore</h3>
             <h2> Click a node on the skill tree to get started!</h2>
-
-
-            </div>
-           
+            </div>          
         </div>
-       
-        
-
         {loading && <div className="text-sm opacity-70">Loading…</div>}
         {error && <div className="text-sm text-red-600">{error}</div>}
-
         {!loading && !error && (
             <div className="flex flex-col gap-1">
             {topLevel.map(node => (
@@ -186,7 +162,6 @@ const Navbar: React.FC = () => {
             ))}
             </div>
         )}
-
         <div className="flex-1" />
     </div>
   );

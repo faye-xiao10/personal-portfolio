@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import drag, { SkillNodeDatum } from './drag'; // Import the type we made in the last step
 import { SkillNode } from '@/types/skill';
+import { attachNeighborhoodSpotlight } from "./interactions";
+
 
 // 1. Define the Props Interface
 interface SkillTreeProps {
@@ -37,6 +39,14 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
     const root = d3.hierarchy(data) as unknown as d3.HierarchyNode<SkillNodeDatum>;
     const links = root.links() as unknown as SkillLinkDatum[];
     const nodes = root.descendants() as unknown as SkillNodeDatum[];
+    nodes.forEach((n, i) => {
+      n.id = n.data.slug ?? n.data.name ?? String(i);
+    });
+
+    // BASE COLORS 
+    const DARK_BLUE = "#2081bd";   
+    const LIGHT_BLUE = "#74d4fc";  
+    const colorScale = d3.interpolateHcl(LIGHT_BLUE, DARK_BLUE);
 
     console.log(
       "D3 nodes after hierarchy:",
@@ -63,8 +73,8 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
     // 5. Physics Simulation
     const simulation = d3.forceSimulation<SkillNodeDatum>(nodes)
       .force("link", d3.forceLink<SkillNodeDatum, SkillLinkDatum>(links)
-        .id((d) => (d as any).id) // D3 internal ID handling
-        .distance(100))
+      .id(d => d.id)
+      .distance(100))
       .force("charge", d3.forceManyBody().strength(-300))
       .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -78,14 +88,14 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
       .data(links)
       .join("line")
       .attr("stroke", "#cbd5e1")
-      .attr("stroke-opacity", 0.6);
+      .attr("stroke-opacity", 1);
 
     const node = g.append("g")
       .selectAll<SVGCircleElement, SkillNodeDatum>("circle")
       .data(nodes)
       .join("circle")
       .attr("r", d => (d.data.size || 20) - d.depth * 2)
-      .attr("fill", d => d.depth === 0 ? "#16D4FF" : "#3b82f6")
+      .attr("fill", d => colorScale(1 - d.depth * 0.6))
       .attr("stroke", "#fff")
       .attr("stroke-width", 2)
       .style("cursor", "pointer")
@@ -103,6 +113,17 @@ const SkillTree: React.FC<SkillTreeProps> = ({ data, onNodeClick, dimensions }) 
       .style("paint-order", "stroke")
       .style("stroke", "#fff")
       .style("stroke-width", "3px");
+
+    // attach interactions
+    attachNeighborhoodSpotlight({
+      node,
+      label,
+      link: link as any,
+      linksData: links as any,
+      fadedOpacity: 0.5,
+      getRadius: (d) => (d.data.size || 20) - d.depth * 2,
+    });
+
 
     // 7. Tick Handler (The Animation loop)
     simulation.on("tick", () => {

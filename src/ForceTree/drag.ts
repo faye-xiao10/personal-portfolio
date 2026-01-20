@@ -7,7 +7,7 @@ import { SkillNode } from "@/types/skill";
 export interface SkillNodeDatum extends d3.SimulationNodeDatum {
   data: SkillNode;
   depth: number; // Added to fix the depth error in SkillTree.tsx
-  id?: string;
+  id: string;
 }
 
 export default function drag(

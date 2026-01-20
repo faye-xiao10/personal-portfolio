@@ -32,6 +32,11 @@ const PreviewTree: React.FC<SkillTreeProps> = ({ data, dimensions }) => {
     const nodes = root.descendants() as unknown as NodeDatum[];
     const links = root.links() as unknown as LinkDatum[];
 
+    // BASE COLORS 
+    const DARK_BLUE = "#2081bd";   
+    const LIGHT_BLUE = "#74d4fc";  
+    const colorScale = d3.interpolateHcl(LIGHT_BLUE, DARK_BLUE);
+
     const simulation = d3
       .forceSimulation<NodeDatum>(nodes)
       .force(
@@ -62,7 +67,7 @@ const PreviewTree: React.FC<SkillTreeProps> = ({ data, dimensions }) => {
       .data(nodes)
       .join("circle")
       .attr("r", (d) => Math.max(2, 6 - d.depth * 1.8))
-      .attr("fill", "#3b82f6");
+      .attr("fill", d => colorScale(1 - d.depth * 0.6))
 
     
 
