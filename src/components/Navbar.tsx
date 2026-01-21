@@ -18,11 +18,6 @@ function hasChildren(n: SkillNode): boolean {
 return Array.isArray(n.children) && n.children.length > 0;
 }
 
-function isSlugActive(nodeSlug: string, activeSlug: string): boolean {
-	if (!nodeSlug) return activeSlug === ""; // root
-	return activeSlug === nodeSlug || activeSlug.startsWith(nodeSlug + "/");
-}
-
 type NavItemProps = {
 	node: SkillNode;
 	depth: number;
@@ -36,11 +31,9 @@ const NavItem: React.FC<NavItemProps> = ({ node, depth, activeSlug, onNavigate }
 	const slug = node.slug ?? "";
 	const isExactActive = slug !== "" && activeSlug === slug;
 	const isInSubtree = slug !== "" && activeSlug.startsWith(slug + "/");
-	const isActive = isExactActive || isInSubtree;
 	const logo = node.logo ?? null;
 	const showLogo = !!logo;
 	const isBranch = hasChildren(node);
-	const shouldBeOpen = isExactActive || isInSubtree;
 
 	const handleRowClick = () => {
 	if (isBranch) {
@@ -66,9 +59,9 @@ const NavItem: React.FC<NavItemProps> = ({ node, depth, activeSlug, onNavigate }
 				onClick={handleRowClick}
 				className={[
 					"group flex items-center rounded-lg py-1 hover:cursor-pointer",
-					"hover:bg-gray-50",
-					isExactActive ? "bg-gray-100" : "",
-					!isExactActive && isInSubtree ? "bg-gray-50" : "",
+					"hover:bg-sky-100 transition-all duration-200 ease-out",
+					isExactActive ? "bg-sky-50 transition-all duration-200 ease-out" : "",
+					!isExactActive && isInSubtree ? "bg-sky-50 transition-all duration-200 ease-out" : "",
 				].join(" ")}
 				>
 			{/* logo */}

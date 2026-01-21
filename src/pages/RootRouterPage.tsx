@@ -37,6 +37,24 @@
 						Hi,  I'm Faye!
 						</h1>
 					</div>
+
+					<div className="flex m-4 gap-4">
+						<div className="ring-sky-200 ring-2 w-fit p-2 rounded-lg cursor-pointer hover:bg-sky-50">
+							View My Projects
+						</div>
+						<div className="ring-sky-200 ring-2 w-fit p-2 rounded-lg cursor-pointer hover:bg-sky-50">
+							View My Hobbies
+						</div>
+						<div className="ring-sky-200 ring-2 w-fit p-2 rounded-lg cursor-pointer hover:bg-sky-50">
+							View My Skills
+						</div>
+						<div className="ring-sky-200 ring-2 w-fit p-2 rounded-lg cursor-pointer hover:bg-sky-50">
+							View My Resume
+						</div>
+
+					</div>
+
+					
 					
 					<div className="w-full flex-1 border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden">
 					

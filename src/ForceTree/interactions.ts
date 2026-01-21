@@ -19,7 +19,7 @@ export function attatchInteractions(opts: {
     label,
     link,
     linksData,
-    fadedOpacity = 0.5,
+    fadedOpacity = 0.3,
     getRadius = (d) => (d.data.size || 20) - d.depth * 2,
   } = opts;
 
