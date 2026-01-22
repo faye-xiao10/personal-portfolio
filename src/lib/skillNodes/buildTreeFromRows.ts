@@ -13,6 +13,7 @@ function rowToNode(row: SkillNodeRow): SkillNodeWithChildren {
     ...(row.logo ? { logo: row.logo } : {}),
     ...(row.pin ? { pin: row.pin } : {}),
     ...(row.description ? { description: row.description } : {}),
+    markdown_summary: row.markdown_summary ?? "",
     children: [],
   };
 }

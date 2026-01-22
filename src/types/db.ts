@@ -12,4 +12,6 @@ export type SkillNodeRow = {
   content: Record<string, unknown> | null;
   updated_at: string;
   description: string | null;
+  markdown_summary: string | null;
+
 };

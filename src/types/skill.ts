@@ -8,4 +8,6 @@ export interface SkillNode {
   children?: SkillNode[];
   logo?: string;
   description?: string | null;
+  markdown_summary?: string | null;
+
 }
