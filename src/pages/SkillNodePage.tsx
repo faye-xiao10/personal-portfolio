@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import type { SkillNode } from "@/types/skill";
-import { Markdown } from "@/components/Markdown";
-import MarkdownEditor from "@/components/MarkdownEditor";
-import { uploadNodeImage } from "@/lib/Markdown/uploadImage";
+import { Markdown } from "@/Markdown/Markdown";
+import MarkdownEditor from "@/Markdown/MarkdownEditor";
+import { uploadNodeImage } from "@/lib/uploadImage";
 
 type SkillPageProps = {
   node: SkillNode;
