@@ -93,7 +93,12 @@ const SkillNodePage: React.FC<SkillPageProps> = ({ node, isAdmin = true }) => {
         ) : (
           <div className="max-w-3xl">
             <Markdown content={draft} />
+
+
+			
           </div>
+
+
         )}
       </div>
     </div>

@@ -11,26 +11,30 @@ import RootRouterPage from './pages/RootRouterPage';
 // import Footer from './components/Footer'
 import AppLayout from './AppLayout';
 import SkillPage from './pages/SkillNodePage';
+import { AuthProvider } from './contexts/AuthContext';
+import Login from './pages/Login';
 
 import './index.css';
 import { SkillTreeProvider } from './contexts/SkillTreeContext';
 // import './tailwind.css';
 
 const Root: React.FC = () => (
-
+  <AuthProvider>
     <SkillTreeProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-          <Route path="/*" element={<RootRouterPage />} />
-          
-          </Route>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<AppLayout />}>
+            <Route path="/*" element={<RootRouterPage />} />
+            <Route path="/login" element={<Login />} />
+            
+            </Route>
 
-    
+      
 
-        </Routes>
-      </BrowserRouter>
-    </SkillTreeProvider>
+          </Routes>
+        </BrowserRouter>
+      </SkillTreeProvider>
+    </AuthProvider>
 )
 const container = document.getElementById('root')!;
 const root = ReactDOM.createRoot(container);

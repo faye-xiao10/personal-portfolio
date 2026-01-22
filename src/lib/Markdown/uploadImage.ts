@@ -6,7 +6,6 @@ export async function uploadNodeImage(opts: {
   nodeSlug: string; // e.g. career/product-builder/skilt
 }) {
   const { file, nodeSlug } = opts;
-
   const ext = file.name.split(".").pop()?.toLowerCase() || "png";
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
   const path = `${nodeSlug}/${Date.now()}-${safeName}`;
