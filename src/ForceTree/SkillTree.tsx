@@ -143,7 +143,7 @@ const SkillTree: React.FC<SkillTreeProps> = ({
       label,
       link: link as any,
       linksData: links as any,
-      fadedOpacity: 0.5,
+      fadedOpacity: 0.4,
       getRadius: (d) => (d.data.size || 20) - d.depth * 2,
     });
 

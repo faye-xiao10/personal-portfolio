@@ -55,7 +55,7 @@ const SkillNodePage: React.FC<SkillPageProps> = ({ node, isAdmin = true }) => {
 	  setEditing(false);
 	}
   return (
-    <div className="h-full w-full p-6">
+    <div className="h-full w-full p-8">
       <div className="flex items-start justify-between gap-4">
         <h1 className="text-3xl font-semibold">{node.name}</h1>
 
@@ -91,7 +91,7 @@ const SkillNodePage: React.FC<SkillPageProps> = ({ node, isAdmin = true }) => {
             onUploadImage={(file) => uploadNodeImage({ file, nodeSlug: node.slug })}
           />
         ) : (
-          <div className="max-w-3xl">
+          <div className="">
             <Markdown content={draft} />
 
 
