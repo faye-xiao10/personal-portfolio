@@ -51,6 +51,15 @@ img {
   font-family: 'Nunito Sans', system-ui, Helvetica, Arial, sans-serif;
 }
 
+.scrollbar-hide {
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari */
+}
+
 
 
 .shimmer-overlay {
@@ -88,5 +97,7 @@ img {
   40%  { opacity: 0.30; }
   100% { opacity: 0;   background-position: 100% 100%; }
 }
+
+
 
 

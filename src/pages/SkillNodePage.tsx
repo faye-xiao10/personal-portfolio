@@ -8,15 +8,30 @@ import { uploadNodeImage } from "@/lib/uploadImage";
 type SkillPageProps = {
   node: SkillNode;
   path: string;
-  isAdmin?: boolean;
 };
 
-const SkillNodePage: React.FC<SkillPageProps> = ({ node, isAdmin = true }) => {
+const SkillNodePage: React.FC<SkillPageProps> = ({ node }) => {
 	const [editing, setEditing] = useState(false);
 	const [draft, setDraft] = useState("");
 	const [lastSaved, setLastSaved] = useState("");
 	const [saving, setSaving] = useState(false);
 	const [err, setErr] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAdmin(!!data.session);
+    });
+  
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAdmin(!!session);
+    });
+  
+    return () => subscription.unsubscribe();
+  }, []);
   
 	useEffect(() => {
 		console.log("NODE id/slug:", node.id, node.slug);
