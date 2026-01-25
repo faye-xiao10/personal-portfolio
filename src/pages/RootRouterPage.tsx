@@ -5,7 +5,7 @@
 	import { useSkillTree } from '@/contexts/SkillTreeContext';
 	import type { SkillNode } from "@/types/skill";
 	import SkillNodePage from "@/pages/SkillNodePage";
-
+	import { nodeRouteOverrides } from "@/pages/NodeRouteOverrides";
 
 
 
@@ -48,7 +48,9 @@
 						<div className="ring-sky-200 ring-2 w-fit p-2 rounded-lg cursor-pointer hover:bg-sky-50">
 							View My Skills
 						</div>
-						<div className="ring-sky-200 ring-2 w-fit p-2 rounded-lg cursor-pointer hover:bg-sky-50">
+						<div className="ring-sky-200 ring-2 w-fit p-2 rounded-lg cursor-pointer hover:bg-sky-50"
+						  onClick={() => navigate("career/resume")}
+>
 							View My Resume
 						</div>
 					</div>
@@ -71,6 +73,7 @@
 
 		// case 2: /faye/... show content
 		const node = getNodeByPath(splat);
+
 		if (!node) {
 		return (
 			<div className="p-8">
@@ -79,7 +82,12 @@
 			</div>
 		);
 		}
-	
+
+		const key = node.slug ?? splat;
+		const override = nodeRouteOverrides[key];
+		if (override) return <>{override({ node, path: splat })}</>;
+
+
 		return <SkillNodePage node={node} path={splat} />;
 	};
 
