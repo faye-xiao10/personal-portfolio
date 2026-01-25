@@ -248,10 +248,10 @@ const Navbar: React.FC = () => {
         </div>
 
         <div
-          className="flex-shrink-0 cursor-pointer rounded-xl transition duration-150 ease-out hover:ring-3 hover:ring-gray-200"
+          className="flex-shrink-0 "
           onClick={() => navigate("/")}
         >
-          <div className="shimmer-overlay w-[120px] h-[120px]">
+          <div className="shimmer-overlay w-[120px] h-[120px] cursor-pointer rounded-xl transition duration-150 ease-out hover:ring-3 hover:ring-gray-200">
             <PreviewTree data={treeData} dimensions={{ width: 120, height: 120 }} />
           </div>
         </div>
