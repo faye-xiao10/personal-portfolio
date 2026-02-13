@@ -68,11 +68,11 @@ const SkillNodePage: React.FC<SkillPageProps> = ({ node }) => {
   const children = node.children ?? [];
 
   return (
-    <div className="h-full w-full p-8">
+    <div className="h-full w-full p-8 overflow-y-auto scrollbar-hide min-h-0" >
       {/* Title + actions */}
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h1 className="text-3xl font-semibold">{node.name}</h1>
+          <h1 className="text-6xl font-opensans font-extrabold">{node.name}</h1>
 
           {/* Children links (top) */}
         {children.length > 0 && (
@@ -140,7 +140,8 @@ const SkillNodePage: React.FC<SkillPageProps> = ({ node }) => {
       {err && <div className="mt-3 text-red-400">{err}</div>}
 
       {/* Markdown below */}
-      <div className="mt-6">
+      <div className="mt-6 ">
+
         {editing ? (
           <MarkdownEditor
             value={draft}

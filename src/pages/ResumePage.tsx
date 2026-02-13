@@ -13,7 +13,7 @@ export default function ResumePage({ node }: Props) {
     <div className="p-8 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-semibold">{node.name}</h1>
+      <h1 className="text-6xl font-opensans font-extrabold">{node.name}</h1>
 
         <a
           href={pdfUrl}

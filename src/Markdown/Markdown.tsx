@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+// import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 
 import "@/Markdown/markdown.css";
@@ -41,7 +41,7 @@ const markdownSchema = {
 
 export function Markdown({ content }: { content: string }) {
   return (
-    <article className="markdown">    
+    <article className="markdown" >    
     <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         remarkRehypeOptions={{ allowDangerousHtml: true }}
@@ -49,7 +49,7 @@ export function Markdown({ content }: { content: string }) {
         rehypePlugins={[
             rehypeRaw,
             rehypeSlug,
-            [rehypeAutolinkHeadings, { behavior: "wrap" }],
+            // [rehypeAutolinkHeadings, { behavior: "wrap" }],
             [rehypeSanitize, markdownSchema],
         ]}
         >

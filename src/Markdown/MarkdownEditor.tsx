@@ -33,6 +33,26 @@ function wrapSelection(
   return next;
 }
 
+function clipboardImageToFile(e: React.ClipboardEvent): File | null {
+  const items = e.clipboardData?.items;
+  if (!items) return null;
+
+  for (const item of Array.from(items)) {
+    if (item.type.startsWith("image/")) {
+      const blob = item.getAsFile();
+      if (!blob) return null;
+
+      // give it a stable filename (helps alt text + storage naming)
+      const ext = blob.type.split("/")[1] || "png";
+      return new File([blob], `pasted-image-${Date.now()}.${ext}`, {
+        type: blob.type,
+      });
+    }
+  }
+
+  return null;
+}
+
 function insertAtCursor(textarea: HTMLTextAreaElement, insert: string) {
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
@@ -117,6 +137,21 @@ export default function MarkdownEditor({ value, onChange, onUploadImage }: Props
     const next = insertAtCursor(ta, block);
     onChange(next);
   }
+
+  async function handlePaste(e: React.ClipboardEvent<HTMLTextAreaElement>) {
+    // If you don't have an uploader, fall back to normal paste behavior
+    if (!onUploadImage || uploading) return;
+  
+    const file = clipboardImageToFile(e);
+    if (!file) return; // not an image paste
+  
+    // Stop the browser from pasting an empty string / weird data
+    e.preventDefault();
+  
+    // Use the same insertion logic as the file picker
+    await handlePickImage(file, insertMode);
+  }
+
   async function handlePickImage(
     file: File,
     mode: "inline" | "table-left" | "table-right"
@@ -287,13 +322,14 @@ export default function MarkdownEditor({ value, onChange, onUploadImage }: Props
 
       {mode === "edit" ? (
         <textarea
-          ref={taRef}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          rows={18}
-          className="w-full rounded border p-3 bg-transparent"
-          placeholder="Write markdown…"
-        />
+        ref={taRef}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onPaste={(e) => void handlePaste(e)}
+        rows={18}
+        className="w-full rounded border p-3 bg-transparent"
+        placeholder="Write markdown…"
+      />
       ) : (
         <div className="rounded border p-4">
           <Markdown content={value} />

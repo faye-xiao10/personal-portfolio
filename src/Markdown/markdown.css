@@ -3,16 +3,18 @@
 
 @layer components {
   .markdown {
-    /* Tell @tailwindcss/typography to use your tokens */
-    --tw-prose-body: var(--text-body);
-    --tw-prose-headings: var(--text-body); /* headings = body color */
-    --tw-prose-links: var(--text-body);
-    --tw-prose-bold: var(--text-body);
-    --tw-prose-quotes: var(--text-body);
-    --tw-prose-counters: var(--text-body);
-    --tw-prose-captions: var(--text-body);
+       @apply prose lg:prose-xl max-w-none;
 
-    @apply prose lg:prose-xl max-w-none;
+       --tw-prose-body: var(--text-body);
+   
+       /* optional but safe */
+       --tw-prose-headings: var(--text-heading);
+       --tw-prose-links: var(--text-body);
+       --tw-prose-bold: inherit;
+       --tw-prose-quotes: inherit;
+       --tw-prose-counters: inherit;
+       --tw-prose-captions: inherit;
+
 
     /* Links in headings should not look like links */
     @apply [&_h1>a]:no-underline
@@ -31,19 +33,19 @@
            [&_h6>a]:font-semibold;
 
     /* Heading hierarchy (size/spacing only) */
-    @apply [&_h1]:text-5xl
+    @apply [&_h1]:text-6xl
            [&_h1]:font-extrabold
            [&_h1]:tracking-tight
            [&_h1]:mt-0
            [&_h1]:mb-4;
 
-    @apply [&_h2]:text-3xl
-           [&_h2]:font-semibold
+    @apply [&_h2]:text-5xl
+           [&_h2]:font-bold
            [&_h2]:mt-8
            [&_h2]:mb-3;
 
-    @apply [&_h3]:text-xl
-           [&_h3]:font-medium
+    @apply [&_h3]:text-3xl
+           [&_h3]:font-semibold
            [&_h3]:mt-6
            [&_h3]:mb-2;
 
@@ -67,13 +69,39 @@
            [&_td_img]:block
            [&_td_img]:m-0;
 
+           
+
     @apply [&_thead]:hidden;
   }
 
-  /* Absolute override for the “heading is a link” case */
-  .markdown :where(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a):not(:where(.not-prose, .not-prose *)) {
+  /* Catch-all color: ensure containers that hold raw text nodes inherit correctly */
+  .markdown :where(p, li, td, th, blockquote, figcaption, pre, code)
+    :not(:where(.not-prose, .not-prose *)) {
     color: var(--text-body);
-    font-weight: inherit;
-    text-decoration: none;
   }
+
+  /* Heading links: ONLY these should lose underline + inherit heading weight */
+  .markdown :where(h1 a, h2 a, h3 a, h4 a, h5 a, h6 a)
+    :not(:where(.not-prose, .not-prose *)) {
+    color: var(--text-body);
+    text-decoration: none;
+    font-weight: inherit;
+  }
+
+  .markdown :where(strong, b):not(:where(.not-prose, .not-prose *)) {
+       font-weight: 800;
+}
+
+.markdown :where(h1):not(.not-prose) {
+       font-weight: 900;
+}
+     
+.markdown :where(h2):not(.not-prose) {
+       font-weight: 800;
+}
+
+  /* --- DEBUG ONLY (delete when done) ---
+  .markdown { outline: 4px solid red !important; }
+  .markdown p { color: hotpink !important; }
+  */
 }
