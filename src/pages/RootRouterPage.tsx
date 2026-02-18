@@ -83,12 +83,11 @@
 		);
 		}
 
-		const key = node.slug ?? splat;
-		const override = nodeRouteOverrides[key];
-		if (override) return <>{override({ node, path: splat })}</>;
+		const normalized = splat.replace(/^\/+|\/+$/g, "");
+		const override = nodeRouteOverrides[normalized];
+		if (override) return <>{override({ node, path: normalized })}</>;
 
-
-		return <SkillNodePage node={node} path={splat} />;
+		return <SkillNodePage node={node} path={normalized} />;
 	};
 
 	export default RootRouterPage;
