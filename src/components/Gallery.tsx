@@ -12,12 +12,12 @@ type GalleryProps = {
 
 
 	return (
-		<div className="columns-2 md:columns-3 gap-2 [column-fill:_balance] ">
+		<div className="columns-2 md:columns-3 xl:columns-4 gap-8 [column-fill:_balance] ">
 			{items.map((item) => (
 				<button	
 					key={item.id}
 					onClick={()=>onOpen(item)}
-					className="group mb-4 w-full break-inside-avoid overflow-hidden bg-amber-300 text-left"
+					className="group mb-8 w-full break-inside-avoid overflow-hidden bg-amber-300 text-left"
 				>
 					<div className="relative">
 						<img
