@@ -72,7 +72,7 @@ const SkillNodePage: React.FC<SkillPageProps> = ({ node }) => {
       {/* Title + actions */}
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h1 className="text-6xl font-opensans font-extrabold">{node.name}</h1>
+          <h1 className="text-5xl font-opensans font-extrabold">{node.name}</h1>
 
           {/* Children links (top) */}
         {children.length > 0 && (
