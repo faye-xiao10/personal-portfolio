@@ -166,9 +166,30 @@ const SkillTree: React.FC<SkillTreeProps> = ({
     });
 
     // Zoom behavior
-    svg.call(d3.zoom<SVGSVGElement, unknown>().on("zoom", (e) => {
+    const zoomBehavior = d3
+    .zoom<SVGSVGElement, unknown>()
+    .scaleExtent([0.2, 3])
+    .on("zoom", (e) => {
       g.attr("transform", e.transform);
-    }));
+    });
+
+    svg.call(zoomBehavior);
+
+    // Initial zoom for small screens
+    const isSmall = width < 768;      // Tailwind md breakpoint
+    const isMedium = width >= 768 && width < 1024; // Tailwind lg breakpoint
+    const isLarge = width >= 1024 && width < 1280; // Tailwind lg breakpoint
+
+
+    const initialK = isSmall ? 0.6 : isMedium ? 0.75 : isLarge? .85 : 1;
+
+    // Center the content after scaling (center of viewport)
+    const initialTransform = d3.zoomIdentity
+    .translate(width / 2, height / 2)
+    .scale(initialK)
+    .translate(-width / 2, -height / 2);
+
+    svg.call(zoomBehavior.transform, initialTransform);
 
     // Cleanup on unmount
     return () => {

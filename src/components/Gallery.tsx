@@ -17,7 +17,7 @@ type GalleryProps = {
 				<button	
 					key={item.id}
 					onClick={()=>onOpen(item)}
-					className="group mb-8 w-full break-inside-avoid overflow-hidden bg-amber-300 text-left"
+					className="group mb-8 w-full break-inside-avoid overflow-hidden text-left"
 				>
 					<div className="relative">
 						<img

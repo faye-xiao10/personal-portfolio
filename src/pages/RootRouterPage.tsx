@@ -63,26 +63,26 @@
 			};
 
 				return (
-					<div className="w-full h-full flex flex-col bg-slate-50">
-						<div className="p-6  md:px-8 text-lg">
-							<h1 className="font-extrabold font-opensans text-5xl mb-3"> 
+					<div className="w-full h-full min-h-0 flex flex-col bg-slate-50">
+						<div className="p-4  md:p-8 text-lg">
+							<h1 className="font-extrabold font-opensans text-3xl md:text-4xl lg:text-5xl mb-3"> 
 								Hi,  I'm Faye!
 							</h1>
-							<h2 className="hidden md:flex md:text-3xl font-light mb-3"> Product Builder | Creative Thinker | Learning Architect. </h2>
-							<p className="text-xl md:text-2xl font-bold  mb-3"> I thrive in fast-moving, ambiguous, product roles where I can build hands-on, exercise creative judgement, and take full ownership. </p>
+							<h2 className="hidden md:flex md:text-2xl font-light mb-3"> Product Builder | Creative Thinker | Learning Architect. </h2>
+							<p className="text-lg font-light md:font-bold md:text-xl mb-3"> I thrive in fast-moving, ambiguous, product roles where I can build hands-on, exercise creative judgement, and take full ownership. </p>
 
-							<p className="text-lg md:text-xl"> The Skill Tree below is a visual representation of my professional identity.  </p>
+							<p className="text-md font-bold md:font-medium md:text-xl"> The Skill Tree below is a visual representation of my professional identity.  </p>
 
-							<ul className="list-disc pl-6 mt-4">							
+							<ul className="list-disc pl-6 mt-4 text-sm md:text-lg">							
 								<li><strong>Click</strong> a circle to explore an experience</li>
 								<li><strong>Larger</strong> circles represent <strong> higher impact</strong> work </li>
 							</ul>
 						
 						</div>
 
-						<h3 className="pl-6 md:pl-12 text-2xl font-bold"> Featured Work (Start Here) </h3>
+						<h3 className="pl-6 md:pl-12 text-lg font-bold"> Featured Work (Start Here) </h3>
 
-						<div className="pl-4 md:pl-8 m- max-w-full overflow-x-auto py-2">
+						<div className="pl-4 md:pl-8 m-2 max-w-full overflow-x-auto py-2">
 							<div className="flex gap-4 w-max">
 								{hotLinks.map((item) => (
 								<div
@@ -100,7 +100,7 @@
 									"
 								>
 									{item.logo && (
-									<div className="w-6 h-6 md:w-12 md:h-12 bg-white flex items-center justify-center rounded-md flex-shrink-0">
+									<div className="w-6 h-6 md:w-8 md:h-8 bg-white flex items-center justify-center rounded-md flex-shrink-0">
 										<img
 										src={item.logo}
 										alt=""
@@ -117,10 +117,9 @@
 							</div>
 							</div>
 					
-						<div className="w-full flex-1 border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden">
+						<div className="w-full flex-1 min-h-0 border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden">
 							<SkillTreeWithPopup
 								data={treeData}
-								dimensions={{ width: 1200, height: 600 }}
 								onNodeClick={(_e, node) => {
 									if (!node.slug) return;
 									navigate(`/${node.slug}`);

@@ -1,79 +1,87 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SkillTree from "@/ForceTree/SkillTree";
 import Popup from "@/components/Popup";
 import type { SkillNode } from "@/types/skill";
 
 type Props = {
   data: SkillNode;
-  dimensions: { width: number; height: number };
   onNodeClick?: (event: React.MouseEvent, node: SkillNode) => void;
 };
 
-export default function SkillTreeWithPopup({ data, dimensions, onNodeClick }: Props) {
+export default function SkillTreeWithPopup({ data, onNodeClick }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const [dims, setDims] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const ro = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+
+      const { width, height } = entry.contentRect;
+      const w = Math.round(width);
+      const h = Math.round(height);
+
+      setDims((prev) => (prev.width === w && prev.height === h ? prev : { width: w, height: h }));
+    });
+
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const [popupPos, setPopupPos] = useState<{ x: number; y: number } | null>(null);
   const [popupNode, setPopupNode] = useState<SkillNode | null>(null);
   const hoverTimeoutRef = useRef<number | null>(null);
   const [popupVisible, setPopupVisible] = useState(false);
 
-
-
   const handleNodeHover = (event: React.MouseEvent, node: SkillNode) => {
     const container = containerRef.current;
     if (!container) return;
-  
+
     const rect = container.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-  
-    // clear any previous hover delay
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
-  
+
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+
     hoverTimeoutRef.current = window.setTimeout(() => {
       setPopupPos({ x, y });
       setPopupNode(node);
-    
-      // mount hidden first so fade-in can animate
       setPopupVisible(false);
-    
-      // next frame: flip to visible -> triggers transition
-      requestAnimationFrame(() => {
-        setPopupVisible(true);
-      });
+      requestAnimationFrame(() => setPopupVisible(true));
     }, 180);
   };
-  
 
   const handleNodeHoverEnd = () => {
-    // cancel any delayed show
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
     }
-  
-    // start fade-out
     setPopupVisible(false);
-  
-    // unmount AFTER transition finishes
     window.setTimeout(() => {
       setPopupNode(null);
       setPopupPos(null);
-    }, 200); // must match Popup transition duration
+    }, 200);
   };
-  
 
   return (
     <div ref={containerRef} className="relative w-full h-full">
-      <SkillTree
-        data={data}
-        dimensions={dimensions}
-        onNodeHover={handleNodeHover}
-        onNodeHoverEnd={handleNodeHoverEnd}
-        {...(onNodeClick ? { onNodeClick } : {})}
+      {dims.width > 0 && dims.height > 0 && (
+        <SkillTree
+          data={data}
+          dimensions={dims}
+          onNodeHover={handleNodeHover}
+          onNodeHoverEnd={handleNodeHoverEnd}
+          {...(onNodeClick ? { onNodeClick } : {})}
         />
+      )}
+
       {popupPos && popupNode && (
         <Popup
           x={popupPos.x}
