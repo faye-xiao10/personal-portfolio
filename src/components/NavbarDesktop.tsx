@@ -10,7 +10,7 @@ export const NavbarDesktop: React.FC = () => {
 
   return (
     <div className="hidden lg:flex w-[30%] h-screen p-8 gap-2 flex-col overflow-hidden">
-      <div className="flex justify-between shrink-0">
+      <div className="flex justify-between shrink-0 gap-2">
         <div>
           <h2
             className="font-extrabold text-3xl rounded-2xl mb-4 hover:cursor-pointer hover:text-gray-600 hover:bg-gray-50"
@@ -18,7 +18,10 @@ export const NavbarDesktop: React.FC = () => {
           >
             Faye Xiao
           </h2>
-          <h3>CS + Business From Umich</h3>
+          <h3 className="font-bold">CS + Business Dual Degree From Umich</h3>
+
+          <h3 className="font-light"> Full-Stack Product Engineer | UX-Driven Creator | AI-Product Builder </h3>
+
         </div>
 
         <div className="flex-shrink-0" onClick={() => navigate("/")}>
@@ -32,8 +35,11 @@ export const NavbarDesktop: React.FC = () => {
 
       <div className="shrink-0">
         <h3 className="font-bold text-2xl">About Me</h3>
+        <p className="text-base font-bold opacity-90">
+        I ship 0→1 at the intersection of AI, product, and business. 
+        </p>
         <p className="text-base opacity-90">
-          Hi I'm Faye, product innovator and creative. Welcome to my skill tree! Every word here is written by me, not AI.
+          This site is a living map of the products, systems, and tools I’ve built and worked on.
         </p>
       </div>
 

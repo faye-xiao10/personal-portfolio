@@ -72,6 +72,12 @@ export default function SkillTreeWithPopup({ data, onNodeClick }: Props) {
 
   return (
     <div ref={containerRef} className="relative w-full h-full">
+      <div className="absolute top-1/2 left-6 -translate-y-1/2 z-20 pointer-events-none">
+        <ul className="list-disc pl-6 text-sm md:text-lg rounded-lg p-3">
+          <li><strong>Click</strong> a circle to explore an experience</li>
+          <li><strong>Larger</strong> circles represent <strong>higher impact</strong> work</li>
+        </ul>
+      </div>
       {dims.width > 0 && dims.height > 0 && (
         <SkillTree
           data={data}

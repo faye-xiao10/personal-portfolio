@@ -261,8 +261,12 @@ const Navbar: React.FC = () => {
       <div className="flex gap-2 shrink-0">
         <div>
           <h3 className="font-bold text-2xl">About Me</h3>
+          <p className="text-base font-bold opacity-90">
+          I ship 0→1 at the intersection of AI, product, and business.
+
+          </p>
           <p className="text-base opacity-90">
-            Hi I'm Faye, product innovator and creative. Welcome to my skill tree! Every word here is written by me, not AI.
+            This site is a living map of the products, systems, and tools I’ve built and worked on.
           </p>
         </div>
       </div>

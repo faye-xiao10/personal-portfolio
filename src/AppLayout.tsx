@@ -18,8 +18,15 @@ const AppLayout: React.FC = () => {
       <div className="hidden lg:block w-[2px] bg-gray-200 self-stretch" />
 
       {/* Routed content. pb-16 so the fixed mobile bar doesn’t cover content */}
-      <main className="flex-1 min-w-0 relative">
-                <Outlet />
+      <main
+          id="app-scroll"
+          className="flex-1 min-w-0 min-h-0 relative overflow-y-auto"
+          onScroll={(e) => {
+            const show = e.currentTarget.scrollTop < 40;
+            document.body.classList.toggle("at-top", show);
+          }}
+        >      
+        <Outlet />
       </main>
 
       {/* Optional: the thin line just above the mobile bar
