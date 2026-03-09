@@ -37,17 +37,18 @@ const Popup: React.FC<PopupProps> = ({
 
   return (
     <div
-  ref={popupRef}
-  style={{ top: y + 50, left: x - 100 }}
-  className={`
-    absolute pointer-events-none
-    bg-white border-3 border-gray-400
-    rounded-lg w-56 min-h-40 p-3 gap-2
-    flex flex-col justify-around z-50
-    transition-all duration-200 ease-out
-    ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}
-  `}
->
+      ref={popupRef}
+      style={{ top: y + 50, left: x - 100, }}
+      className={`
+        absolute pointer-events-none
+        bg-white border-3 border-gray-400
+        rounded-lg w-56 min-h-40 p-3 gap-2
+        flex flex-col justify-around z-50
+        transition-all duration-200 ease-out
+        
+        ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}
+      `}
+    >
       <h2 className="font-bold text-xl">
         {nodeData.name || nodeData.slug || "Untitled Node"}
       </h2>

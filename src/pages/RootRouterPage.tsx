@@ -160,7 +160,7 @@
 								className="
 									w-full
 									h-[420px] md:h-[520px] lg:h-[620px]
-									border border-gray-200 rounded-lg bg-white shadow-sm overflow-hidden
+									border border-gray-200 rounded-lg bg-white shadow-sm 
 								"
 							>							
 								<SkillTreeWithPopup

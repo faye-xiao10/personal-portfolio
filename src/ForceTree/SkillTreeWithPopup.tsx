@@ -47,6 +47,7 @@ export default function SkillTreeWithPopup({ data, onNodeClick }: Props) {
     const rect = container.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
+    
 
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
 
